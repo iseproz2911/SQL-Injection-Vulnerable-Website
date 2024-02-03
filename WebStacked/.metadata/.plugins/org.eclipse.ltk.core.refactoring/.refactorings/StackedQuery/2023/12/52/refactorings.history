@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;StackedQuery/StackedQueriesEx&apos; to &apos;StackedQueriesEx.txt&apos;" description="Rename resource &apos;StackedQueriesEx&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="StackedQueriesEx" name="StackedQueriesEx.txt" stamp="1703640461227" updateReferences="true"/>
+</session>

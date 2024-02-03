@@ -1,0 +1,8 @@
+INDEX VERSION 1.4+F:\WebSQLi\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+483754505.index
+4128477849.index
+1844037235.index
+1425110106.index
+235549898.index
+1476075538.index
+4216392349.index

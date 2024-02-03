@@ -1,0 +1,79 @@
+package demo;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet(name = "MainServlet", urlPatterns = "/MainServletDemo")
+public class MainServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            try {
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:sqlserver://MinhQuan\\SQLEXPRESS01:1433;databaseName=stacksql", "sa", "123456789@");
+
+            String query = "SELECT * FROM Product";
+            if (query.toUpperCase().contains("SELECT")) {
+                response.getWriter().write("SELECT queries are not allowed.");
+                return;
+            }
+
+            query = query.toLowerCase();
+
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            request.setAttribute("resultSet", resultSet);
+
+            request.getRequestDispatcher("Form.jsp").forward(request, response);
+
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ResultSet getProductDetailsById(String productId) throws SQLException {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DriverManager.getConnection(
+                    "jdbc:sqlserver://MinhQuan\\SQLEXPRESS01:1433;databaseName=stacksql", "sa", "123456789@");
+            System.out.println("Connection successful");
+
+            String sql = "SELECT * FROM Product WHERE ID = " + productId;
+            if (sql.toUpperCase().contains("SELECT")) {
+                System.out.println("SELECT queries are not allowed.");
+                return null;
+            }
+
+            sql = sql.toLowerCase();
+
+            statement = connection.createStatement();
+
+            resultSet = statement.executeQuery(sql);
+
+            return resultSet;
+        } finally {
+        }
+    }
+}

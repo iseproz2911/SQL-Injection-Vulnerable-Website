@@ -1,0 +1,79 @@
+import java.io.IOException;
+import java.sql.*;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/productDetails")
+public class ProductDetailsServlet extends HttpServlet {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String productId = request.getParameter("id");
+
+        if (productId != null && !productId.isEmpty()) {
+            String normalizedProductId = normalizeSqlKeywords(productId);
+
+            if (!containsSqlKeyword(normalizedProductId)) {
+                // Nếu không chứa từ khóa SQL, thực hiện truy vấn
+                try {
+                    ResultSet resultSet = getProductDetailsById(normalizedProductId);
+                    // Xử lý kết quả và trả về thông tin sản phẩm
+                    // ...
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    // Xử lý lỗi
+                }
+            } else {
+                // Nếu chứa từ khóa SQL, xử lý hoặc trả về lỗi
+                response.getWriter().println("Invalid input");
+            }
+        } else {
+            // Xử lý khi không có thông tin sản phẩm
+            response.getWriter().println("Product ID is required");
+        }
+    }
+
+    private boolean containsSqlKeyword(String input) {
+        // Kiểm tra xem chuỗi đầu vào có chứa từ khóa SQL không
+        String[] sqlKeywords = {"select", "update", "delete", "insert", "drop", "alter", "create", "truncate"};
+        for (String keyword : sqlKeywords) {
+            if (input.contains(keyword)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private String normalizeSqlKeywords(String input) {
+        // Chuyển đổi chuỗi thành chữ thường
+        return input.toLowerCase();
+    }
+
+    private ResultSet getProductDetailsById(String productId) throws SQLException {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DriverManager.getConnection(
+                    "jdbc:sqlserver://MinhQuan\\SQLEXPRESS01:1433;databaseName=stacksql", "sa", "123456789@");
+            System.out.println("Connection successful");
+
+            String sql = "FROM Product WHERE ID = " + productId;
+
+            // Create a statement
+            statement = connection.createStatement();
+
+            // Execute the query
+            resultSet = statement.executeQuery("SELECT * " + sql);
+
+            // Do not close the ResultSet here
+
+            return resultSet;
+        } finally {
+            // Do not close the Statement and Connection here
+        }
+    }
+}
