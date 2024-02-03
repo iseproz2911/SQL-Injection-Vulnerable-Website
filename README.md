@@ -8,6 +8,7 @@ Website has a simple interface (Log in, view product catalog...) contains variou
 + Bypass Login, Union dump database , Blind SQLi , Error Base, Out of band  
 + Stacked Queries CRUD lead to RCE 
 Database for exploit: SQL Server, MySQL.
+
 Reference source: 
 https://portswigger.net/web-security
 https://book.hacktricks.xyz/pentesting-web/sql-injection/sqlmap
