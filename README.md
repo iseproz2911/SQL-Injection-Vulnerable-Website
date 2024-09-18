@@ -15,3 +15,5 @@ https://book.hacktricks.xyz/pentesting-web/sql-injection/sqlmap
 https://www.sqlinjection.net/category/attack/techniques/
 https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/SQL%20Injection
 Tools: Burp Suite, SQLmap, Hackbar.
+
+WriteUp Solve challenge On PortSwigger by me: https://hackmd.io/@iamproz2911/B1oZDm5jC
